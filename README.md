@@ -17,3 +17,7 @@ The DA-NRW Presentation Repository constists of the following components:
 * [Fedora](doc/install_fedora.md)
 * [PrOAI](doc/install_proai.md)
 * [Elasticsearch](doc/install_elasticsearch.md)
+
+Additional documentation
+
+* [Create user](doc/create_user.md)
