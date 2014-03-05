@@ -1,14 +1,15 @@
 # OAI Provider
+
 ## Installation
 
 Der OAI Provider ist ein separates Servlet, dass die in Fedora bereits vorhandene OAI-PMH Schnittstelle durch eine stabilere und besser konfigurierbare Version ersetzt. Er wird wie folgt installiert:
 oaiprovider.war herunterladen
 
-  wget http://downloads.sourceforge.net/fedora-commons/oaiprovider-1.2.2.zip
+    wget http://downloads.sourceforge.net/fedora-commons/oaiprovider-1.2.2.zip
 
 entpacken
 
-  unzip oaiprovider-1.2.2.zip
+    unzip oaiprovider-1.2.2.zip
 
 war in Tomcat deployen
 
