@@ -98,7 +98,3 @@ to
 
 At last restart tomcat again.
 
-
-### PrOAI
-
-### ElasticSearch
