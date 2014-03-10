@@ -68,7 +68,11 @@ Folgende Einstellungen vornehmen:
     driver.fedora.mpt.jdbc.password = Password des DB-Users für die Tabelle riTriples
 
 Die Datei mit den entsprechenden Einstellungen befindet sich auch im Bazaar-Repository unter `config/proai.properties`
-Tomcat neustarten
+
+Tomcat neustarten.
+
+
+## Logging
 
 Der OAI Provider loggt standardmäßig zu stdout, d.h. in die Datei `/opt/tomcat/log/catalina.out`. Das Loggingverhalten kann in `/opt/tomcat/webapps/oaiprovider/WEB-INF/classes/log4j.xml` angepasst werden.
 
