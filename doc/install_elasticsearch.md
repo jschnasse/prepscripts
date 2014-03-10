@@ -12,7 +12,7 @@ Wenn die Installation erfolgreich war sollte folgender Befehl eine sinnvolle Aus
 	
 ## Konfiguration
 
-In der zentralen Konfigurationsdatei (unter CentOS /etc/elasticsearch/elasticsearch.yml) sollte unbedingt der Clustername geändert werden. Dieser muss dem Wert von elasticsearch.cluster in der Contentbroker-Konfiguration (ContentBroker/conf/config.properties) entsprechen.
+In der zentralen Konfigurationsdatei (unter CentOS /etc/elasticsearch/elasticsearch.yml) sollte unbedingt der Clustername geändert werden. Dieser muss dem Wert von elasticsearch.cluster in der Contentbroker-Konfiguration (ContentBroker/conf/config.properties) entsprechen und für das DNS-Grid eindeutig sein, da sich Server des gleichen Clusters im selben Netzwerk automatisch synchronisieren.
 
 Anschließend muss der in der ContentBroker-Konfiguration angegebene Index erstellt werden:
 
