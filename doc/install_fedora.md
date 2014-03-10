@@ -16,6 +16,20 @@ Make sure Tomcat is able to allocate enough memory. For example by putting the f
 
 #### PostgreSQL
 
+Create user 'fedora' and database 'fedora in PostgreSQL
+
+    adduser fedora
+    passwd fedora
+    psql -U postgres template1
+    CREATE USER fedora WITH PASSWORD 's3cr3t';
+    CREATE DATABASE fedora;
+    GRANT ALL PRIVILEGES ON DATABASE fedora TO fedora;
+
+Create database 'riTriples' for the resource index (caution: use quotes for case sensitive table name)
+
+    CREATE DATABASE "riTriples";
+    GRANT ALL PRIVILEGES ON DATABASE "riTriples" TO fedora;
+
 ### Installation of Fedora Commons for DNSCore
 
 Fedora commons 3.5 Setup:
