@@ -26,7 +26,7 @@ Datenbank und Datenbankuser proai mit Passwort proai anlegen
 
 ## Konfiguration
 
-Objekt zur Identifikation der OAI-PMH-Schnittstelle in Fedora anlegen.
+Objekt zur Identifikation der OAI-PMH-Schnittstelle in Fedora anlegen (ggf. Passwort in `ingest.py` anpassen).
 
     python scripts/ingest.py -f config/danrw_PresentationRepository.xml
 
