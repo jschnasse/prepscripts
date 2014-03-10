@@ -21,3 +21,4 @@ The DA-NRW Presentation Repository constists of the following components:
 Additional documentation
 
 * [Create user](doc/create_user.md)
+* [How to setup iRODS for Presentation Repository](doc/setup_irods.md)
