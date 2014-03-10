@@ -6,8 +6,15 @@ The so called "Presentation Repository" stores derivates (proxies) of your AIP. 
 
 ### Prerequsites 
 
-1. tomcat 
-2. Postgres
+#### Tomcat
+
+Tomcat installation depends on the OS. Tomcat should be at least Version 6. Tomcat 7 is recommended.
+
+Make sure Tomcat is able to allocate enough memory. For example by putting the following line into `CATALINA_BASE/bin/sentenv.sh` (create it if it doesn't exist):
+
+    JAVA_OPTS="-Djava.awt.headless=true -server -Xms48m -Xmx1024M -XX:MaxPermSize=512m"
+
+#### PostgreSQL
 
 ### Installation of Fedora Commons for DNSCore
 
