@@ -13,7 +13,7 @@ entpacken
 
 war in Tomcat deployen
 
-  sudo -u tomcat cp oaiprovider-1.2.2/oaiprovider.war /opt/tomcat/webapps/
+    sudo -u tomcat cp oaiprovider-1.2.2/oaiprovider.war /opt/tomcat/webapps/
 
 Datenbank und Datenbankuser proai mit Passwort proai anlegen
 
@@ -23,6 +23,11 @@ Datenbank und Datenbankuser proai mit Passwort proai anlegen
     CREATE USER proai WITH PASSWORD 'proai';
     CREATE DATABASE proai;
     GRANT ALL PRIVILEGES ON DATABASE proai TO proai;
+    
+Ordner für PrOAI-Daten anlegen, z.B:
+
+    mkdir /data/danrw/proai
+    
 
 ## Konfiguration
 
