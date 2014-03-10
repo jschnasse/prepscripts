@@ -116,7 +116,7 @@ Skripte und Policy-Dateien aus dem bazaar-Repository laden
 
     git clone https://github.com/da-nrw/prepscripts.git
 
-Die Policy-Objekte liegen unter `policies` und können mit dem Skript `scripts/setup-policies.py` geladen werden. Das Package python-httplib2 muss dazu installiert sein. Vor der Ausführung sollte die FedoraClient-URL in den Skriptdateien angepasst werden. Ansclipeßend das Skript ausführen:
+Die Policy-Objekte liegen unter `policies` und können mit dem Skript `scripts/setup-policies.py` geladen werden. Das Package python-httplib2 muss dazu installiert sein. Vor der Ausführung sollte die FedoraClient-URL in den Skriptdateien angepasst werden. Ansclipeßend das Skript ausführen (im Wurzelverzeichnis des prepscripts-Repository:
 
     python scripts/setup-policies.py
 
