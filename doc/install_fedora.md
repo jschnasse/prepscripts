@@ -107,10 +107,6 @@ Fedora kann jetzt unter folgenden URLs erreicht werden:
 ### Policies
 
 Um den Zugriff auf Objekte zu verhindern, die nicht öffentlich zugänglich sein sollen, müssen die entsprechenden XACML-Policies wie folgt installiert werden:
-
-Default Bootstrap-Policies löschen (sonst werden diese bei jedem Neustart geladen)
-
-    sudo rm -f /opt/fedora/pdp/policies/*
     
 Skripte und Policy-Dateien aus dem bazaar-Repository laden
 
@@ -133,5 +129,9 @@ muss ersetzt werden durch:
     </attribute>
     
 Dadurch wird sichergestellt, dass die in der Policy `fedora-policy_access-closed-collection.xml` referenzierte Eigenschaft `ownerId` sich bei Datastreams auf das übergeordnete Objekt bezieht. Erst dadurch ist es möglich, dass dem Besitzer eines Objekts auch die zugehörigen Datastreams angezeigt werden.
+
+Default Bootstrap-Policies löschen (sonst werden diese bei jedem Neustart geladen)
+
+    sudo rm -f /opt/fedora/pdp/policies/*
 
 Tomcat neustarten.
