@@ -1,9 +1,4 @@
-# Preparing Fedora for DNSCore
-
-This document is intended not to describe the fedora installation itself, but 
-the configuration needed in order to let DNSCore work with it.
-
-(To be translated and formatted)
+# Setting up the Presentation Repository for DNSCore
 
 ## Presentation Repository
 
