@@ -1,8 +1,8 @@
-# Setting up the Presentation Repository for DNSCore
+# Setting up the Presentation Repository
 
 ## Presentation Repository
 
-The so called "Presentation Repository" stores derivates (proxies) of your AIP. Although in OAIS terms, they are DIP too, in DNSCore they are called PIP (Presentation IP). The stored files to be considered to be browser readable. The presenation repository. DNSCore uses Fedora Commons 3.5 
+The so called "Presentation Repository" stores derivates (proxies) of your AIP. Although in OAIS terms, they are DIP too, in DNSCore they are called PIP (Presentation IP). The stored files are considered to be browser readable. The presenation repository in DNSCore uses Fedora Commons 3.5.
 
 ### Prerequsites 
 
