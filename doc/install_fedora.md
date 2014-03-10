@@ -1,22 +1,30 @@
-# Setting up the Presentation Repository
+# Presentation Repository installieren
 
-## Presentation Repository
+Das Presentation Repository des DA-NRW zur Bereitstellung der konvertierten browserfähigen Objekte und zum Abruf durch Portale läuft nur an einem Knoten des Grids und zwar an der Universität zu Köln. Momentan wird als Repository-Software Fedora 3.5 eingesetzt.
 
-The so called "Presentation Repository" stores derivates (proxies) of your AIP. Although in OAIS terms, they are DIP too, in DNSCore they are called PIP (Presentation IP). The stored files are considered to be browser readable. The presenation repository in DNSCore uses Fedora Commons 3.5.
+Im folgenden wird davon ausgegangen dass die Installationspfade wie folgt lauten (diese müssen beim Abarbeiten der Dokumentation ggf. entsprechend angepasst werden):
+* Fedora: /opt/fedora
+* Tomcat: /opt/tomcat
+
+Im Source-Code-Repository befindet sich ein Projekt mit Skripten und Config-Dateien zu Fedora. Die aktuelle Adresse ist
+
+    https://github.com/da-nrw/prepscripts.git
+    
+## Voraussetzungen
 
 ### Prerequsites 
 
 #### Tomcat
 
-Tomcat installation depends on the OS. Tomcat should be at least Version 6. Tomcat 7 is recommended.
+Das Vorgehenzur Installation von Tomcat hängt vom Betriebssystem ab und wird hier deswegen nicht genauer dokumentiert. Fedora 3.5 läuft sowohl unter Tomcat 6, als auch unter Tomcat 7. Da folgende Versionen von Fedora Tomcat 7 benötigen wird dieser jedoch empfohlen.
 
-Make sure Tomcat is able to allocate enough memory. For example by putting the following line into `CATALINA_BASE/bin/sentenv.sh` (create it if it doesn't exist):
+Sicherstellen, dass Tomcat genügend Speicher allozieren kann, z.B. indem in der Datei `CATALINA_BASE/bin/sentenv.sh` (anlegen, wenn Sie nicht existiert) folgendes eingetragen wird:
 
     JAVA_OPTS="-Djava.awt.headless=true -server -Xms48m -Xmx1024M -XX:MaxPermSize=512m"
 
 #### PostgreSQL
 
-Create user 'fedora' and database 'fedora in PostgreSQL
+Nutzer `fedora` und Datenbank `fedora` anlegen:
 
     adduser fedora
     passwd fedora
@@ -25,31 +33,42 @@ Create user 'fedora' and database 'fedora in PostgreSQL
     CREATE DATABASE fedora;
     GRANT ALL PRIVILEGES ON DATABASE fedora TO fedora;
 
-Create database 'riTriples' for the resource index (caution: use quotes for case sensitive table name)
+Datenbank `riTriples` für den Resource Index in PostgreSQL anlegen (Achtung: case sensitive name -> quotes verwenden!):
 
     CREATE DATABASE "riTriples";
     GRANT ALL PRIVILEGES ON DATABASE "riTriples" TO fedora;
-
-### Installation of Fedora Commons for DNSCore
-
-Fedora commons 3.5 Setup:
-
-Create Database and user for fedora.
-
-    sudo java -jar fcrepo-installer-3.5.jar
     
+## Fedora
+
 ### Installation
 
+    GRANT ALL PRIVILEGES ON DATABASE "riTriples" TO fedora;
+
+Fedora Installer in der Version 3.5 downloaden:
+
+    wget http://downloads.sourceforge.net/fedora-commons/fcrepo-installer-3.5.jar
+
+Installer ausführen:
+
+    sudo java -jar fcrepo-installer-3.5.jar
+
+Während der Installation folgende Optionen wählen:
+
     Installation type: custom
+    Fedora home directory: Pfad in dem Fedora installiert werden soll, z.B.: /opt/fedora
+    Fedora administrator password: Passwort
+    Fedora server host: DNS-Name des Presentation Repository Servers
+    Fedora application server context: fedora
     Authentication requirement for API-A: false
     SSL availability: false
     Servlet engine: existingTomcat
-    Tomcat home directory
+    Tomcat home directory: Pfad zu Tomcat (z.B. /opt/tomcat)
     Tomcat HTTP port: 8080
     Tomcat shutdown port: 8005
     Database: postgresql
     Postgresql JDBC driver: included
     Database username: fedora
+    Database password: In Schritt 2 gewähltes Passwort
     JDBC URL: jdbc:postgresql://localhost/fedora
     JDBC DriverClass: org.postgresql.Driver
     Enable FeSL AuthN: true
@@ -60,46 +79,59 @@ Create Database and user for fedora.
     Enable Messaging: false
     Deploy local services and demos: false
 
-Ensure tomcat owner can access the Fedora home dir.
+Die Datei fedora.fcfg mit den entsprechenden Einstellungen befindet sich auch im Repository unter `config/fedora.fcfg`.
 
-Open `/opt/fedora/server/config/fedora.fcfg` and change adminEmailList and repositoryName according to your needs.
-     
+Ggf. die vom Installer erstellte server.xml in den Tomcat-Ordner conf kopieren. 
+
+Eventuell müssen die Berechtigungen so angepasst werden, dass der User, unter dem Tomcat läuft, Schreibzugriff auf den Home-Ordner von Fedora hat
+
+`/opt/fedora/server/config/fedora.fcfg` öffnen.
+
+Ggf. adminEmailList und repositoryName anpassen.
+
+Im Modul `org.fcrepo.oai.OAIProvider` ggf. adminEmails setzen, außerdem:
+
     repositoryDomainName = danrw.de
     repositoryName = DA-NRW Presentation Repository
 
-In the module `org.fcrepo.server.resourceIndex.ResourceIndex` change the attribute `datastore` to `localPostgresMPTTriplestore`.
+Im Modul org.fcrepo.server.resourceIndex.ResourceIndex den Paramter datastore auf localPostgresMPTTriplestore setzen.
 
-Restart tomcat.
+Ggf. die Datenbankeinstellungen (weiter unten in `fedora.fcfg`) im datastore `localPostgresMPTTriplestore` anpassen.
+Tomcat neustarten.
 
+Fedora kann jetzt unter folgenden URLs erreicht werden:
+* Generelle Informationen: http://<servername>:8080/fedora
+* Suchinterface: http://<servername>:8080/fedora/objects
+* Admininterface: http://<servername>:8080/fedora/admin
 
 ### Policies
 
-In order to prevent access to non-public objects a set of XACML policies has to be installed as follows:
+Um den Zugriff auf Objekte zu verhindern, die nicht öffentlich zugänglich sein sollen, müssen die entsprechenden XACML-Policies wie folgt installiert werden:
 
-Remove the defaut bootstrap policies (otherwise they will be loaded at each restart):
+Default Bootstrap-Policies löschen (sonst werden diese bei jedem Neustart geladen)
 
     sudo rm -f /opt/fedora/pdp/policies/*
-
-In order to load the custom policies for the DA-NRW check out the scripts and policies from bazaar:
+    
+Skripte und Policy-Dateien aus dem bazaar-Repository laden
 
     git clone https://github.com/da-nrw/prepscripts.git
 
-The policy objects are stored in the folder `trunk/policies` and can be loaded with the script `scripts/setup-policies.py`. In order for this to work the python package `python-httplib2` has to be installed. Also the Fedora URL should be changed in the scripts before running the script with:
+Die Policy-Objekte liegen unter `policies` und können mit dem Skript `scripts/setup-policies.py` geladen werden. Das Package python-httplib2 muss dazu installiert sein. Vor der Ausführung sollte die FedoraClient-URL in den Skriptdateien angepasst werden. Ansclipeßend das Skript ausführen:
 
     python scripts/setup-policies.py
 
-In order for the policies that restrict access to non-public objects to work the attribute finder has to be reconfigured as follows. Open the file `/opt/fedora/pdp/conf/config-attribute-finder.xml` and change the line
-```xml
-<attribute designator="resource" 
-    name="info:fedora/fedora-system:def/model#ownerId"/>
-```
-to
-```xml
-<attribute designator="resource" 
-      name="info:fedora/fedora-system:def/model#ownerId">
-    <config name="target" value="object"/>
-</attribute>
-```
+Damit die Policy für die Beschränkung des Zugriffs auf nicht-öffentliche Objekte richtig funktioniert muss folgende Änderung in der Datei `/opt/fedora/pdp/conf/config-attribute-finder.xml` vorgenommen werden:
 
-At last restart tomcat again.
+Die Zeile
 
+    <attribute designator="resource" name="info:fedora/fedora-system:def/model#ownerId"/>
+    
+muss ersetzt werden durch:
+
+    <attribute designator="resource" name="info:fedora/fedora-system:def/model#ownerId">
+        <config name="target" value="object"/>
+    </attribute>
+    
+Dadurch wird sichergestellt, dass die in der Policy `fedora-policy_access-closed-collection.xml` referenzierte Eigenschaft `ownerId` sich bei Datastreams auf das übergeordnete Objekt bezieht. Erst dadurch ist es möglich, dass dem Besitzer eines Objekts auch die zugehörigen Datastreams angezeigt werden.
+
+Tomcat neustarten.
