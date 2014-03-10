@@ -69,17 +69,6 @@ Open `/opt/fedora/server/config/fedora.fcfg` and change adminEmailList and repos
 
 In the module `org.fcrepo.server.resourceIndex.ResourceIndex` change the attribute `datastore` to `localPostgresMPTTriplestore`.
 
-Open `/opt/tomcat/webapps/fedora/WEB-INF/applicationContext.xml` and change the attribute `fedoraServerHost` to the DNS name of the machine fedora is running on.
-```xml
-<bean class="org.fcrepo.server.config.Parameter">
-  <constructor-arg type="java.lang.String" value="fedoraServerHost">
-    <!-- Defines the host name for the Fedora server, as seen from
-         the  outside world. -->
-  </constructor-arg>
-  <property name="value" value="<hostname>" />
-</bean>
-```
-
 Restart tomcat.
 
 
