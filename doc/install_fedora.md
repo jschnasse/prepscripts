@@ -72,7 +72,7 @@ Remove the defaut bootstrap policies (otherwise they will be loaded at each rest
 
 In order to load the custom policies for the DA-NRW check out the scripts and policies from bazaar:
 
-    bzr checkout sftp://[login]@repositories.hki.uni-koeln.de/repositories/bzr/danrw/Fedora/trunk
+    git clone https://github.com/da-nrw/prepscripts.git
 
 The policy objects are stored in the folder `trunk/policies` and can be loaded with the script `scripts/setup-policies.py`. In order for this to work the python package `python-httplib2` has to be installed. Also the Fedora URL should be changed in the scripts before running the script with:
 
